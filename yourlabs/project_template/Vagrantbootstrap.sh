@@ -12,7 +12,6 @@ npm install -g coffee-script recess
 
 su postgres -c 'psql -f /vagrant/docs/examples/postgresql_utf8_template.sql'
 su postgres -c 'createuser -wsrd vagrant'
-su postgres -c 'createuser -wsrd root'
 su postgres -c 'createdb -E UTF8 -O vagrant django'
 
 mkdir -p /srv/{{ project_name }}/
@@ -26,10 +25,11 @@ pip install django
 ln -sfn /vagrant/docs/examples/nginx.conf /etc/nginx/nginx.conf
 
 /etc/init.d/nginx start
+echo source /srv/{{ project_name }}/env/bin/activate >> /etc/bash.bashrc
 echo DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant >> /etc/bash.bashrc
 export DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant
-/srv/{{ project_name }}/{{ project_name }}/manage.py syncdb --noinput
-/srv/{{ project_name }}/{{ project_name }}/manage.py migrate
+sudo -u vagrant /srv/{{ project_name }}/env/bin/python /srv/{{ project_name }}/{{ project_name }}/manage.py syncdb --noinput
+sudo -u vagrant /srv/{{ project_name }}/env/bin/python /srv/{{ project_name }}/{{ project_name }}/manage.py migrate
 chown -R vagrant /srv/{{ project_name }}/env
 chown vagrant /srv/{{ project_name }}
 
