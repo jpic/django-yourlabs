@@ -40,7 +40,6 @@ class Command(BaseCommand):
 
         project_path = os.path.join(os.getcwd(), project_name)
         manage_path = os.path.join(project_path, 'manage.py')
-        import ipdb; ipdb.set_trace()  # XXX BREAKPOINT
 
         if not options['no_install_requirements']:
             print '[yl] Installing project requirements ....'
