@@ -10,6 +10,7 @@ def run(cmd):
     output = subprocess.check_output(cmd, shell=True)
     print output.replace('django-admin.py startproject', 'yl')
 
+
 def main():
     if sys.argv[1] == 'help':
         run(['django-admin.py', 'help', 'startproject'])
@@ -26,8 +27,11 @@ def main():
     project_path = os.path.join(os.getcwd(), sys.argv[-1])
     if os.path.exists(project_path):
         print '[yl] Project successfully created: %s' % project_path
-    sys.exit(0)
-
+        print '[yl] Installing requirements ...'
+        subprocess.call(['pip', 'install', '-r', os.path.join(
+            project_path, 'requirements', 'base.txt')])
+    else:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

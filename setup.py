@@ -24,6 +24,9 @@ setup(
     long_description=read('README.rst'),
     license='MIT',
     keywords='django template starter',
+    install_requires=[
+        'django',
+    ],
     classifiers=[
         'Development Status :: 1 - Planning',
         'Environment :: Web Environment',

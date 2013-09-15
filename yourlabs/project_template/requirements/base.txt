@@ -1,8 +1,3 @@
-# those require compiling toolchain, you can remove them if your OS
-# is broken ...
-pil
-pylibmc
-
 django-debug-toolbar
 django-debug-toolbar-template-timings
 django-cache-panel
@@ -12,7 +7,6 @@ django-cache-panel
 django-extensions
 ipython
 ipdb
-werkzeug
 django-haystack
 whoosh
 django-reversion
@@ -28,4 +22,4 @@ pycco
 django-compressor
 jsmin
 cssmin
-BeatifulSoup
+BeautifulSoup
