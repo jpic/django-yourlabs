@@ -12,6 +12,7 @@ npm install -g coffee-script recess
 
 su postgres -c 'psql -f /vagrant/docs/examples/postgresql_utf8_template.sql'
 su postgres -c 'createuser -wsrd vagrant'
+su postgres -c 'createuser -wsrd root'
 su postgres -c 'createdb -E UTF8 -O vagrant django'
 
 mkdir -p /srv/{{ project_name }}/
