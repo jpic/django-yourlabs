@@ -47,9 +47,19 @@ The project template has:
 `yourlabs` package
 ==================
 
-As a python package, it provides a command `yl`  which barely
-decorates `django-admin.py startproject` to add the `--template`
-argument automatically.
+As a python package, it provides a command `yl`  which barely decorates
+`django-admin.py`, giving priority to django-yourlab's commands. To use the
+normal Django commands, just use `django-admin.py` or `manage.py`.
+
+Except for `startproject`, all commands must be run from project root.
+
+As an app, it provides:
+
+- `yourlabs.context_processors.expose_settings` which would add `{{
+  settings.DEBUG }}` for example if `settings.EXPOSE_SETTINGS=['DEBUG']`,
+
+TODO
+====
 
 As a django app, it provides the following commands:
 
@@ -70,10 +80,3 @@ As a django app, it provides the following commands:
   `app/search_indexes.py`,
 - `yl_autocomplete_light <app>` will parse `app/models.py` and create
   `app/autocomplete_light_registry.py`,
-
-Except for `startproject`, all commands must be run from project root.
-
-As an app, it provides:
-
-- `yourlabs.context_processors.expose_settings` which would add `{{
-  settings.DEBUG }}` for example if `settings.EXPOSE_SETTINGS=['DEBUG']`,
