@@ -41,9 +41,10 @@ SETTINGS_CONTEXT_PROCESSOR_VARIABLES = ('DEBUG', 'COMPRESS_ENABLED')
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 
-def project_directory(subdirectory):
-    return os.path.join(PROJECT_ROOT, subdirectory).replace('\\','/')
 
+def project_directory(subdirectory):
+    return os.path.realpath(
+        os.path.join(PROJECT_ROOT, subdirectory).replace('\\','/'))
 
 # {{{ django-compressor stuff
 COMPRESS_PRECOMPILERS = (
