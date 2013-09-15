@@ -1,0 +1,4 @@
+django_yourlabs.egg-info/
+*pyc
+*pyo
+__pycache__
