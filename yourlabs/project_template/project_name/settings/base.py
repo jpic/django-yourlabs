@@ -2,8 +2,6 @@ import os
 
 from django.conf.global_settings import *
 
-COMPRESS_ENABLED=True
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
