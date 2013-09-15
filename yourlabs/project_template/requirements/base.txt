@@ -4,6 +4,7 @@ django-cache-panel
 
 # classic
 -e git+https://github.com/pdr/django-responsive-admin.git#egg=responsive_admin
+-e git+https://github.com/jpic/django-yourlabs.git#egg=yourlabs
 django-extensions
 ipython
 ipdb

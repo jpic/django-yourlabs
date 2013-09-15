@@ -18,7 +18,7 @@ INSTALLED_APPS = (
     'autocomplete_light',
     'compressor',
     'reversion',
-
+    'yourlabs',
     '{{ project_name }}',
 )
 
