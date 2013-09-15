@@ -21,11 +21,18 @@ virtualenv --system-site-packages /srv/{{ project_name }}/env
 source /srv/{{ project_name }}/env/bin/activate
 pip install -r /srv/{{ project_name }}/{{ project_name }}/requirements/base.txt
 pip install django
-chown -R vagrant /srv/{{ project_name }}/env
-chown vagrant /srv/{{ project_name }}
 
 ln -sfn /vagrant/docs/examples/nginx.conf /etc/nginx/nginx.conf
 
-uwsgi --ini /vagrant/docs/examples/{{ project_name }}.ini
 /etc/init.d/nginx start
-echo DJANGO_SETTINGS_MODULE=settings.vagrant >> /etc/bash.bashrc
+echo DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant >> /etc/bash.bashrc
+export DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant
+/srv/{{ project_name }}/{{ project_name }}/manage.py syncdb --noinput
+/srv/{{ project_name }}/{{ project_name }}/manage.py migrate
+chown -R vagrant /srv/{{ project_name }}/env
+chown vagrant /srv/{{ project_name }}
+
+uwsgi --ini /vagrant/docs/examples/{{ project_name }}.ini
+
+echo Please enter password for superuser 'test'
+/srv/{{ project_name }}/{{ project_name }}/manage.py createsuperuser
