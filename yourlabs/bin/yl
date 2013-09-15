@@ -3,6 +3,8 @@ import os
 
 from django.core import management
 
+import yourlabs
+
 _commands = None
 
 
@@ -13,11 +15,11 @@ def new_get_commands():
     global _commands
     if _commands is None:
         path = os.path.realpath(os.path.join(management.__path__[0]))
-        _commands = (dict([(name, 'django') for name in
+        _commands = (dict([(name, 'django.core') for name in
             management.find_commands(path)]))
 
         path = os.path.realpath(os.path.join(
-            os.path.dirname(__file__), '..', 'management'))
+            yourlabs.__path__[0], 'management'))
         _commands.update([(name, 'yourlabs') for name in
             management.find_commands(path)])
 
