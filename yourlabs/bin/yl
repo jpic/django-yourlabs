@@ -1,64 +1,48 @@
 #!/usr/bin/env python
-import sys
 import os
-import subprocess
 
-import yourlabs
+from django.core import management
 
-
-def run(cmd):
-    cmd = u' '.join(cmd)
-    print '[yl] Running command: %s' % cmd
-    output = subprocess.check_output(cmd, shell=True)
-    print output.replace('django-admin.py startproject', 'yl')
+_commands = None
 
 
-def main():
-    if sys.argv[1] == 'help':
-        run(['django-admin.py', 'help', 'startproject'])
-        sys.exit(0)
+def new_get_commands():
+    """
+    Override django's get_commands which gives yourlabs priority over django.
+    """
+    global _commands
+    if _commands is None:
+        path = os.path.realpath(os.path.join(management.__path__[0]))
+        _commands = (dict([(name, 'django') for name in
+            management.find_commands(path)]))
 
-    cmd=['django-admin.py', 'startproject']
-    cmd+=sys.argv[1:-1]
-    cmd.append('--template=%s' % os.path.realpath(
-        os.path.join(yourlabs.__path__[0], 'project_template')))
-    cmd.append('--extension=ini,json,md,rst,py,Makefile,sh,conf')
-    cmd.append(sys.argv[-1])
+        path = os.path.realpath(os.path.join(
+            os.path.dirname(__file__), '..', 'management'))
+        _commands.update([(name, 'yourlabs') for name in
+            management.find_commands(path)])
 
-    run(cmd)
-
-    project_path = os.path.join(os.getcwd(), sys.argv[-1])
-    if os.path.exists(project_path):
-        manage_path = os.path.join(project_path, 'manage.py')
-
-        print '[yl] Project successfully created: %s' % project_path
-        print '[yl] Installing requirements ...'
-
-        subprocess.call(['pip', 'install', '-r', os.path.join(
-            project_path, 'requirements', 'base.txt')])
-
-        print '[yl] Setting up the dev database ....'
-        subprocess.call([manage_path, 'syncdb',
-                         '--noinput'])
-        subprocess.call([manage_path, 'migrate',
-                         '--noinput'])
-
-        print '[yl] Creating a superuser with username=test and'
-        print '[yl] email=test@example.com, type in password and enter'
-        print '[yl] or exit with Ctrl+C'
-
+        # Find the installed apps
+        from django.conf import settings
         try:
-            subprocess.call([manage_path,
-                            'createsuperuser', '--username=test',
-                             '--email=test@example.com'])
-        except KeyboardInterrupt:
-            print ''
-            print ''
-            print ''
-            print 'Superuser creation aborded'
+            apps = settings.INSTALLED_APPS
+        except management.ImproperlyConfigured:
+            # Still useful for commands that do not require functional settings,
+            # like startproject or help
+            apps = []
 
-    else:
-        sys.exit(1)
+        # Find and load the management module for each installed app.
+        for app_name in apps:
+            try:
+                path = management.find_management_module(app_name)
+                _commands.update(dict([(name, app_name)
+                                       for name in management.find_commands(path)]))
+            except ImportError:
+                pass # No management module - ignore this app
+
+    return _commands
+
+management.get_commands = new_get_commands
+management._commands = _commands
 
 if __name__ == "__main__":
-    main()
+    management.execute_from_command_line()
