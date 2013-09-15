@@ -28,14 +28,18 @@ def main():
 
     project_path = os.path.join(os.getcwd(), sys.argv[-1])
     if os.path.exists(project_path):
+        manage_path = os.path.join(project_path, 'manage.py')
+
         print '[yl] Project successfully created: %s' % project_path
         print '[yl] Installing requirements ...'
+
         subprocess.call(['pip', 'install', '-r', os.path.join(
             project_path, 'requirements', 'base.txt')])
-        print '[yl] Setting up the database ...'
-        subprocess.call([os.path.join(project_path, 'manage.py'), 'syncdb',
+
+        print '[yl] Setting up the dev database ....'
+        subprocess.call([manage_path, 'syncdb',
                          '--noinput'])
-        subprocess.call([os.path.join(project_path, 'manage.py'), 'migrate',
+        subprocess.call([manage_path, 'migrate',
                          '--noinput'])
 
         print '[yl] Creating a superuser with username=test and'
@@ -43,7 +47,7 @@ def main():
         print '[yl] or exit with Ctrl+C'
 
         try:
-            subprocess.call([os.path.join(project_path, 'manage.py'),
+            subprocess.call([manage_path,
                             'createsuperuser', '--username=test',
                              '--email=test@example.com'])
         except KeyboardInterrupt:
