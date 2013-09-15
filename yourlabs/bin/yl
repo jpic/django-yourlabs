@@ -3,6 +3,8 @@ import sys
 import os
 import subprocess
 
+import yourlabs
+
 
 def run(cmd):
     cmd = u' '.join(cmd)
@@ -19,7 +21,7 @@ def main():
     cmd=['django-admin.py', 'startproject']
     cmd+=sys.argv[1:-1]
     cmd.append('--template=%s' % os.path.realpath(
-        os.path.join(os.path.dirname(__file__), '..', 'project_template')))
+        os.path.join(yourlabs.__path__[0], 'project_template')))
     cmd.append(sys.argv[-1])
 
     run(cmd)
