@@ -22,6 +22,7 @@ def main():
     cmd+=sys.argv[1:-1]
     cmd.append('--template=%s' % os.path.realpath(
         os.path.join(yourlabs.__path__[0], 'project_template')))
+    cmd.append('--extension=ini,json,md,rst,py,Makefile,sh,conf')
     cmd.append(sys.argv[-1])
 
     run(cmd)
