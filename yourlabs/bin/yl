@@ -32,6 +32,26 @@ def main():
         print '[yl] Installing requirements ...'
         subprocess.call(['pip', 'install', '-r', os.path.join(
             project_path, 'requirements', 'base.txt')])
+        print '[yl] Setting up the database ...'
+        subprocess.call([os.path.join(project_path, 'manage.py'), 'syncdb',
+                         '--noinput'])
+        subprocess.call([os.path.join(project_path, 'manage.py'), 'migrate',
+                         '--noinput'])
+
+        print '[yl] Creating a superuser with username=test and'
+        print '[yl] email=test@example.com, type in password and enter'
+        print '[yl] or exit with Ctrl+C'
+
+        try:
+            subprocess.call([os.path.join(project_path, 'manage.py'),
+                            'createsuperuser', '--username=test',
+                             '--email=test@example.com'])
+        except KeyboardInterrupt:
+            print ''
+            print ''
+            print ''
+            print 'Superuser creation aborded'
+
     else:
         sys.exit(1)
 
