@@ -34,10 +34,10 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
-    '{{ project_name }}.context_processors.settings',
+    'yourlabs.context_processors.expose_settings',
 )
 
-SETTINGS_CONTEXT_PROCESSOR_VARIABLES = ('DEBUG', 'COMPRESS_ENABLED')
+EXPOSE_SETTINGS = ('DEBUG', 'COMPRESS_ENABLED')
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 
