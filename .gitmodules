@@ -1,0 +1,6 @@
+[submodule "yourlabs/project_template/static/bootstrap"]
+	path = yourlabs/project_template/static/bootstrap
+	url = git://github.com/twbs/bootstrap.git
+[submodule "yourlabs/project_template/static/less"]
+	path = yourlabs/project_template/static/less
+	url = https://github.com/less/less.js.git
