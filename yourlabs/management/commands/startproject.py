@@ -36,7 +36,8 @@ class Command(BaseCommand):
             if o.dest == 'template':
                 o.default = YOURLABS_TEMPLATE
             if o.dest == 'extensions':
-                o.default = 'ini,json,md,rst,py,Makefile,sh,conf'
+                o.default = ['ini', 'json', 'md', 'rst', 'py', 'Makefile',
+                             'sh', 'conf']
 
         return instance
 
