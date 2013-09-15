@@ -9,18 +9,23 @@ from yourlabs import YOURLABS_TEMPLATE
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
+        make_option('--local', action='store_true',
+            help='Prepare for local development, alias for '
+                '--install-requirements, --install-db and --createsuperuser'),
+        make_option('--vagrant', action='store_true',
+            help='Prepare for vagrant server, alias for --vagrant-up'),
+        make_option('--install-requirements', action='store_true',
+            help='Install project requirements.'),
+        make_option('--install-db', action='store_true', default=True,
+            help='Prepare the dev sqlite db with syncdb and migrate.'),
+        make_option('--createsuperuser', action='store_true', default=True,
+            help='Run createsuperuser after installing your db.'),
+        make_option('--vagrant-up', action='store_true',
+            help='Run vagrant after making your project.'),
         make_option('--requirements-file',
                     action='store',
                     default='requirements/base.txt',
                     help='The path to requirements to install.'),
-        make_option('--no-install-requirements', action='store_true',
-            help='Do NOT install project requirements.'),
-        make_option('--no-install-db', action='store_true', default=True,
-            help='Do NOT Run syncdb and migrate.'),
-        make_option('--no-createsuperuser', action='store_true', default=True,
-            help='Do NOT createsuperuser after installing your db.'),
-        make_option('--vagrant-up', action='store_true',
-            help='Run vagrant after making your project.'),
     )
 
     def __new__(cls, *args, **kwargs):
@@ -41,17 +46,25 @@ class Command(BaseCommand):
         project_path = os.path.join(os.getcwd(), project_name)
         manage_path = os.path.join(project_path, 'manage.py')
 
-        if not options['no_install_requirements']:
+        if options['local']:
+            options['install_requirements'] = True
+            options['install_db'] = True
+            options['createsuperuser'] = True
+
+        if options['vagrant']:
+            options['vagrant_up'] = True
+
+        if options['install_requirements']:
             print '[yl] Installing project requirements ....'
             subprocess.call(['pip', 'install', '--exists-action', 'i', '-r',
                 os.path.join( project_path, options['requirements_file'])])
 
-        if not options['no_install_db']:
+        if options['install_db']:
             print '[yl] Setting up the dev database ....'
             subprocess.call([manage_path, 'syncdb', '--noinput'])
             subprocess.call([manage_path, 'migrate', '--noinput'])
 
-        if not options['no_createsuperuser']:
+        if options['createsuperuser']:
             print '[yl] Creating a superuser with username=test and'
             print '[yl] email=test@example.com, type in password and enter'
             print '[yl] or exit with Ctrl+C'

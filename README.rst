@@ -14,7 +14,7 @@ Get started right away on your linux box:
     virtualenv your_project_env
     source your_project_env/bin/activate
     pip install -e git+https://github.com/jpic/django-yourlabs.git#egg=yourlabs
-    yl startproject your_project
+    yl startproject --local your_project
 
 Your project is now runnable and ready to hack on and vagrant-ready (ready to
 be hacked on using broken OSes).
