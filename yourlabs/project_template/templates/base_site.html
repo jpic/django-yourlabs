@@ -13,7 +13,7 @@
         {% else %}
             <link href="{% static 'main.less' %}" charset="utf-8" media="screen" type="text/less" rel="stylesheet">
             <script type="text/javascript">less = {}; less.env = 'development';</script>
-            <script type="text/javascript" src="{% static 'less/dist/less-1.4.2.js' %}" ></script>
+            <script type="text/javascript" src="{% static 'less/less.js' %}" ></script>
         {% endif %}
 
         {% compress css %}{# External apps css go here #}
