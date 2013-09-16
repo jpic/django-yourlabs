@@ -36,12 +36,21 @@ EOF
 }
 
 function install_http {
-    apt-get install -y nginx uwsgi-plugin-python nodejs npm memcached
+    apt-get install -y nginx uwsgi uwsgi-plugin-python nodejs npm memcached
     npm install -g coffee-script recess
 
     ln -sfn /vagrant/docs/examples/nginx.conf /etc/nginx/nginx.conf
     /etc/init.d/nginx start
-    uwsgi --ini /vagrant/docs/examples/{{ project_name }}.ini
+    
+    ln -sfn /vagrant/docs/examples/{{ project_name }}.ini /etc/uwsgi/apps-enabled/
+    
+    cat > /tmp/installscript <<EOF
+export DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant
+source /srv/{{ project_name }}/env/bin/activate
+cd /srv/{{ project_name }}
+./manage.py collectstatic -l --noinput
+EOF
+    su vagrant -c /tmp/installscript
 }
 
 function install_project {
