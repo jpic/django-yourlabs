@@ -11,7 +11,7 @@ touch /tmp/installscript
 chmod +x /tmp/installscript
 
 function install_db {
-    sudo apt-get install postgresql-9.1
+    sudo apt-get install -y postgresql-9.1
 
     cat > /tmp/installscript <<EOF
 #!/usr/bin/env bash
