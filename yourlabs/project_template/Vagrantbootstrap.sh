@@ -23,7 +23,8 @@ EOF
         
     cat > /tmp/installscript <<EOF
 export DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant
-cd /srv/{{ project_name }}/{{ project_name }}
+source /srv/{{ project_name }}/env/bin/activate
+cd /srv/{{ project_name }}
 ./manage.py syncdb --noinput
 ./manage.py migrate
 EOF
@@ -44,15 +45,15 @@ function install_project {
     
     apt-get install -y git python-virtualenv python-imaging python-psycopg2 python-pylibmc
 
-    mkdir -p /srv/{{ project_name }}/ && chown vagrant /srv/{{ project_name }}
-    ln -sfn /vagrant /srv/{{ project_name }}/{{ project_name }}
+    ln -sfn /vagrant /srv/{{ project_name }}
+    chown vagrant /srv/{{ project_name }}
 
     cat > /tmp/installscript <<EOF
 #!/usr/bin/env bash
 virtualenv --system-site-packages /srv/{{ project_name }}/env
 source /srv/{{ project_name }}/env/bin/activate
 pip install django
-pip install -r /srv/{{ project_name }}/{{ project_name }}/requirements/base.txt
+pip install -r /srv/{{ project_name }}/requirements/base.txt
 EOF
     su vagrant -c /tmp/installscript
 }

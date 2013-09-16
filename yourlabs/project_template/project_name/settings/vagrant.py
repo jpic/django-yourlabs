@@ -30,7 +30,7 @@ LOGGING = {
         'logfile': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': project_directory('..', 'django.log'),
+            'filename': project_directory('django.log'),
             'maxBytes': 50000,
             'backupCount': 2,
             'formatter': 'standard',
