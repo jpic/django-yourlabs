@@ -1,0 +1,17 @@
+language: python
+python:
+  - "2.7"
+env:
+  - DJANGO=1.4
+  - DJANGO=1.5
+install:
+  - pip install -q Django==$DJANGO --use-mirrors
+script:
+  - python runtests.py
+notifications:
+  irc: 
+    channels: 
+      - "irc.freenode.org#neoskills"
+      - "irc.freenode.org#yourlabs"
+    template:
+      - "%{repository} (%{commit} %{author}) : %{message} %{build_url} %{compare_url}"
