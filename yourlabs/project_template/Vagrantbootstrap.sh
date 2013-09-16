@@ -10,6 +10,10 @@ apt-get update
 touch /tmp/installscript
 chmod +x /tmp/installscript
 
+echo export DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant >> /home/vagrant/.bashrc
+echo cd /vagrant >> /home/vagrant/.bashrc
+echo source env/bin/activate >> /home/vagrant/.bashrc
+
 function install_db {
     sudo apt-get install -y postgresql-9.1
 
