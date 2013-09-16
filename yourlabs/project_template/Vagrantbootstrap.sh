@@ -60,4 +60,4 @@ EOF
 
 install_project
 install_db
-
+install_http
