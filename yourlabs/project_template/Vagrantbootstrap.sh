@@ -1,18 +1,41 @@
 #!/usr/bin/env bash
-#echo export LANGUAGE=en_US.UTF-8 > /etc/bash.bashrc
-#echo export LANG=en_US.UTF-8 > /etc/bash.bashrc
-#echo LC_ALL=en_US.UTF-8 > /etc/bash.bashrc
-#locale-gen en_US.UTF-8
-#dpkg-reconfigure locales
-
-apt-get update
-
 touch /tmp/installscript
 chmod +x /tmp/installscript
 
-echo export DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant >> /home/vagrant/.bashrc
-echo cd /vagrant >> /home/vagrant/.bashrc
-echo source env/bin/activate >> /home/vagrant/.bashrc
+function install_os {
+    apt-get update
+    
+    cat > /etc/rc.local <<EOF
+#!/usr/bin/env bash
+dhclient eth0
+uwsgi /etc/uwsgi/apps-enabled/{{ project_name }}.ini
+exit 0
+EOF
+    
+    cat >> /home/vagrant/.bashrc <<EOF
+export DJANGO_SETTINGS_MODULE={{ project_name }}.settings.vagrant
+cd /vagrant
+source env/bin/activate 
+
+echo 'Server reload: kill -HUP \$(</tmp/uwsgi_{{ project_name }}.pid)'
+echo 'Server stop: kill -INT \$(</tmp/uwsgi_{{ project_name }}.pid)'
+echo 'Server start: uwsgi /etc/uwsgi/apps-enabled/{{ project_name }}.ini'
+echo Server logs: tail -f /vagrant/uwsgi.log
+echo
+if [[ -f /tmp/uwsgi_{{ project_name }}.pid ]]; then
+    kill -0 \$(</tmp/uwsgi_{{ project_name }}.pid)
+
+    if [[ \$? -eq 0 ]]; then
+        echo Server is currently running
+    else
+        echo Server is dead, starting server
+    fi
+else
+    echo Server is **not** running, starting
+    uwsgi /etc/uwsgi/apps-enabled/{{ project_name }}.ini
+fi
+EOF
+}
 
 function install_db {
     sudo apt-get install -y postgresql-9.1
@@ -51,6 +74,8 @@ cd /srv/{{ project_name }}
 ./manage.py collectstatic -l --noinput
 EOF
     su vagrant -c /tmp/installscript
+    
+    uwsgi /etc/uwsgi/apps-enabled/{{ project_name }}.ini
 }
 
 function install_project {
@@ -71,6 +96,7 @@ EOF
     su vagrant -c /tmp/installscript
 }
 
+install_os
 install_project
 install_db
 install_http
