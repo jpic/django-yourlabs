@@ -1,0 +1,19 @@
+2013-09-17
+
+CHANGELOG will be kept as a journal will the app is in a draft/POC state, until
+a release appears.
+
+Got the main pieces there:
+
+- startproject, project_template: good
+- AppInspector and TemplateCommand: good & tested
+- commands, code templates: good & tested
+- docs: probably good because they include settings used in Vagrant, but are
+  worth refreshing. A refactor would be good in a couple of places where there
+  are packs of 50 lines of code.
+- stability: I still need to make sure it runs perfectly, so I plan to test
+  startproject from within vagrant itself, nesting 2 vagrant boxes. It would
+  like to automate this but it would be really nasty for travis-ci i think,
+  bootstrapping a VM takes long time on my computer already so I don't see this
+  happenning every 5 minutes on a public server, gotta be a good neighbour.
+- fun: ain't nothing as fun !
