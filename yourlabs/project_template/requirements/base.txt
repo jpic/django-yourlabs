@@ -24,5 +24,8 @@ pycco
 # for production deployment
 django-compressor
 jsmin
-cssmin
+
+# use git cssmin for python3 support
+-e git+https://github.com/zacharyvoase/cssmin.git#egg=cssmin
+# cssmin
 BeautifulSoup
