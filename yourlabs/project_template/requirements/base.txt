@@ -25,7 +25,7 @@ pycco
 django-compressor
 jsmin
 
-# use git cssmin for python3 support
--e git+https://github.com/zacharyvoase/cssmin.git#egg=cssmin
+# use git cssmin with fixed setup.py for python3 support
+-e git+https://github.com/jpic/cssmin.git#egg=cssmin
 # cssmin
 BeautifulSoup
