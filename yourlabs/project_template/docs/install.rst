@@ -21,7 +21,7 @@ Also, different projects may depend on different versions (ie.
 django 1.4 vs django 1.5) and thus it is a best practice to have a
 virtual environment per project checkout.
 
-This is how setting up the environment looks like::
+This is how setting up a local environment looks like::
 
     # install requirements dependencies, ubuntu example
     sudo apt-get install libmemcached-dev python-dev npm node
@@ -45,6 +45,16 @@ This is how setting up the environment looks like::
 
     # install requirements
     pip install -r {{ project_name }}/requirements.txt
+
+    # Create database tables
+    {{ project_name }}/manage.py syncdb
+
+    # Apply migrations
+    {{ project_name }}/manage.py migrate
+
+Your project is now ready to use, you can start a shell with 
+`{{ project_name }}/manage.py shell` or a local http server with 
+`{{ project_name }}/manage.py runserver`.
 
 What next ?
 -----------
