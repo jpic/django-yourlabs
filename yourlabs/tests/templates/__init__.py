@@ -13,6 +13,9 @@ warnings.simplefilter('ignore', RuntimeWarning)
 
 def clear_pyc(path):
     for root, dirnames, filenames in os.walk(path):
+        for dirname in dirnames:
+            if dirname == '__pycache__':
+                shutil.rmtree(os.path.join(root, dirname))
         for filename in filenames:
             if filename[-4:] == '.pyc':
                 os.unlink(os.path.join(root, filename))
@@ -70,7 +73,7 @@ class TemplatesTestCase(unittest.TestCase):
 
     def tearDown(self):
         if os.environ.get('YL_DEBUG', False):
-            print self.paths_to_remove
+            print(self.paths_to_remove)
         else:
             for path in self.paths_to_remove:
                 shutil.rmtree(path)
@@ -83,6 +86,9 @@ def test_generator(test_name):
 
 for dirname in os.listdir(os.path.dirname(__file__)):
     if not os.path.isdir(os.path.join(os.path.dirname(__file__), dirname)):
+        continue
+
+    if dirname == '__pycache__':
         continue
 
     setattr(TemplatesTestCase, 'test_%s' % dirname, test_generator(dirname))

@@ -94,11 +94,11 @@ class TemplateCommand(BaseCommand):
                         content = template_file.read()
 
                 if options.get('dry_run', False):
-                    print '=' * 40
-                    print destination_filepath
-                    print '-' * 40
-                    print content
-                    print '=' * 40
+                    print ('=' * 40)
+                    print (destination_filepath)
+                    print ('-' * 40)
+                    print (content)
+                    print ('=' * 40)
                 else:
                     with open(destination_filepath, 'wb') as new_file:
                         new_file.write(content)

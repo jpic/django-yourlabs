@@ -38,6 +38,9 @@ class AppInspector(object):
                     dirs[os.path.splitext(child)[0]] = dict(name=child)
 
                 elif os.path.isdir(child_path):
+                    if child == '__pycache__':
+                        continue
+
                     dirs[child] = dict(dir=inspect_dir(child_path))
 
             return dirs
