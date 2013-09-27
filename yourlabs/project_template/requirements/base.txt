@@ -28,4 +28,4 @@ jsmin
 # use git cssmin with fixed setup.py for python3 support
 -e git+https://github.com/jpic/cssmin.git#egg=cssmin
 # cssmin
-BeautifulSoup
+BeautifulSoup4
