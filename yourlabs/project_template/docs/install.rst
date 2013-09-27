@@ -3,8 +3,16 @@ Installing this project
 
 This chapter covers the basic installation of this project.
 
-Setting up a basic environment
-------------------------------
+Setting up a basic virtual environment (For all users)
+------------------------------------------------------
+
+- Install `Vagrant <http://vagrantup.com>`_,
+- Clone the project repository with git (`Windows
+  <http://windows.github.com/>`_, `MacOSX <http://mac.github.com/>`_),
+- Run the `Vagrantfile`.
+
+Setting up a basic local environment (For hardcore users)
+---------------------------------------------------------
 
 It is necessary to create a virtual environment per project if you
 don't want to pollute your OS with project-specific dependencies.
