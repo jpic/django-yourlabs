@@ -2,3 +2,4 @@
 *.pyo
 __pycache__
 public/
+static/bower_components
