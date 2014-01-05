@@ -95,7 +95,7 @@ STATIC_URL = '/public/static/'
 STATICFILES_DIRS = (project_directory('static'),)
 TEMPLATE_DIRS = (project_directory('templates'),)
 FIXTURE_DIRS = (project_directory('fixtures'),)
-BOWER_COMPONENTS_ROOT = project_directory('components')
+BOWER_COMPONENTS_ROOT = project_directory('static')
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
