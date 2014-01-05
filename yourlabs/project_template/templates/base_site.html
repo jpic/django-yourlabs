@@ -13,7 +13,7 @@
         {% else %}
             <link href="{% static 'main.less' %}" charset="utf-8" media="screen" type="text/less" rel="stylesheet">
             <script type="text/javascript">less = {}; less.env = 'development';</script>
-            <script type="text/javascript" src="{% static 'less/dist/less-1.6.0.min.js' %}" ></script>
+            <script type="text/javascript" src="{% static 'bower_components/less/dist/less-1.6.0.min.js' %}" ></script>
         {% endif %}
 
         {% compress css %}{# External apps css go here #}
@@ -23,8 +23,8 @@
         {# HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries #}
         <!--[if lt IE 9]>
           {% compress js %}
-          <script src="{% static 'html5shiv/dist/html5shiv.js' %}"></script>
-          <script src="{% static 'respond/dest/respond.min.js' %}"></script>
+          <script src="{% static 'bower_components/html5shiv/dist/html5shiv.js' %}"></script>
+          <script src="{% static 'bower_components/respond/dest/respond.min.js' %}"></script>
           {% endcompress %}
         <![endif]-->
         
@@ -36,8 +36,8 @@
         {% endblock %}
 
         {% compress js %}{# All js go here #}
-        <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bower_components/jquery/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
         
         <script type="text/javascript" src="{% static 'autocomplete_light/autocomplete.js' %}"></script>
         <script type="text/javascript" src="{% static 'autocomplete_light/widget.js' %}"></script>
