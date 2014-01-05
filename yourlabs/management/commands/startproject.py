@@ -20,6 +20,8 @@ class Command(BaseCommand):
             help='Prepare the dev sqlite db with syncdb and migrate.'),
         make_option('--createsuperuser', action='store_true',
             help='Run createsuperuser after installing your db.'),
+        make_option('--bower-install', action='store_true',
+            help='Run bower_install after superuser creation.'),
         make_option('--vagrant-up', action='store_true',
             help='Run vagrant after making your project.'),
         make_option('--requirements-file',
@@ -51,6 +53,7 @@ class Command(BaseCommand):
             options['install_requirements'] = True
             options['install_db'] = True
             options['createsuperuser'] = True
+            options['bower_install'] = True
 
         if options['vagrant']:
             options['vagrant_up'] = True
@@ -75,6 +78,14 @@ class Command(BaseCommand):
                     '--username=test', '--email=test@example.com'])
             except KeyboardInterrupt:
                 print 'Superuser creation aborded'
+
+        if options['bower_install']:
+            print '[yl] Running bower_install ...'
+
+            try:
+                subprocess.call([manage_path, 'bower_install',])
+            except KeyboardInterrupt:
+                print 'Bower component installation aborded'
 
         if options['vagrant_up']:
             os.chdir(project_path)

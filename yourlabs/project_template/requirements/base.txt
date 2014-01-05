@@ -16,6 +16,7 @@ django-reversion
 django-modeltranslation
 south
 django-autocomplete-light
+django-bower
 
 # for docs
 sphinx

@@ -13,7 +13,7 @@
         {% else %}
             <link href="{% static 'main.less' %}" charset="utf-8" media="screen" type="text/less" rel="stylesheet">
             <script type="text/javascript">less = {}; less.env = 'development';</script>
-            <script type="text/javascript" src="{% static 'less/less.js' %}" ></script>
+            <script type="text/javascript" src="{% static 'less/dist/less-1.6.0.min.js' %}" ></script>
         {% endif %}
 
         {% compress css %}{# External apps css go here #}
@@ -23,8 +23,8 @@
         {# HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries #}
         <!--[if lt IE 9]>
           {% compress js %}
-          <script src="{% static 'bootstrap/assets/js/html5shiv.js' %}"></script>
-          <script src="{% static 'bootstrap/assets/js/respond.min.js' %}"></script>
+          <script src="{% static 'html5shiv/dist/html5shiv.js' %}"></script>
+          <script src="{% static 'respond/dest/respond.min.js' %}"></script>
           {% endcompress %}
         <![endif]-->
         

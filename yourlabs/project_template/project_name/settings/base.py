@@ -2,6 +2,15 @@ import os
 
 from django.conf.global_settings import *
 
+BOWER_INSTALLED_APPS = (
+    'jquery',
+    'bootswatch',
+    'bootstrap',
+    'html5shiv',
+    'respond',
+    'less',
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -14,6 +23,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     'django_extensions',
+    'djangobower',
     'south',
     'autocomplete_light',
     'compressor',
@@ -85,6 +95,7 @@ STATIC_URL = '/public/static/'
 STATICFILES_DIRS = (project_directory('static'),)
 TEMPLATE_DIRS = (project_directory('templates'),)
 FIXTURE_DIRS = (project_directory('fixtures'),)
+BOWER_COMPONENTS_ROOT = project_directory('components')
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
@@ -98,6 +109,7 @@ SECRET_KEY = '{{ secret_key }}'
 ROOT_URLCONF = '{{ project_name }}.urls'
 WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 STATICFILES_FINDERS = (
+    'djangobower.finders.BowerFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
